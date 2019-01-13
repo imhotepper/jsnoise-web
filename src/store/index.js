@@ -3,8 +3,6 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
-var rootApi = process.env.ROOT_API;
-
 export default new Vuex.Store({
     state: {
         podcasts: [],
@@ -72,9 +70,9 @@ export default new Vuex.Store({
             }
         },
         loadPodcasts(context, details) {
-            var url = `${rootApi}/api/showslist?page=${details.page}`;
+            var url = `/api/showslist?page=${details.page}`;
             if (details.pid) {
-                url = `${rootApi}/api/producers/${details.pid}/shows?page=${details.page}`;
+                url = `/api/producers/${details.pid}/shows?page=${details.page}`;
             }
             if (details.q) url += "&q=" + details.q;
             context.commit('isLoading', true);
@@ -95,7 +93,7 @@ export default new Vuex.Store({
         },
         loadProducers(context) {
             context.commit('isLoading', true);
-            Vue.axios.get(`${rootApi}/api/admin/producers`)
+            Vue.axios.get(`/api/admin/producers`)
                 .then((resp) => {
                     context.commit("setProducers", resp.data);
                     context.commit('isLoading', false);
@@ -106,7 +104,7 @@ export default new Vuex.Store({
                 });
         },
         saveProducer(context, producer) {
-            Vue.axios.post(`${rootApi}/api/admin/producers`, producer)
+            Vue.axios.post(`/api/admin/producers`, producer)
                 .then((resp) => {
                     context.dispatch('loadProducers');
                 })
