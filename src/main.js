@@ -61,8 +61,7 @@ axios.interceptors.response.use(function (response) {
     return Promise.reject(error);
   }
 });
-
-
+   
 import store from '@/store'
 
 /* eslint-disable no-new */

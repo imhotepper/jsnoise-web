@@ -10,15 +10,24 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "apollo-boost": "^0.4.4",
+    "apollo-cache-inmemory": "^1.6.3",
+    "apollo-client": "^2.6.4",
+    "apollo-link": "^1.2.12",
+    "apollo-link-context": "^1.0.18",
+    "apollo-link-http": "^1.5.15",
     "axios": "^0.18.0",
     "bootstrap": "^4.0.0",
     "crip-vue-loading": "^1.2.5",
+    "graphql": "^14.4.2",
+    "graphql-tag": "^2.10.1",
     "npm": "^6.0.0",
     "uiv": "^0.21.3",
     "vue": "^2.5.2",
+    "vue-apollo": "^3.0.0-alpha.3",
     "vue-axios": "^2.1.0",
     "vue-router": "^3.0.1",
-    "vuex": "^3.0.1"
+    "vuex": "^3.1.1"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",

@@ -1,9 +1,61 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+//import gql from 'graphql-tag';
+
+//import { ApolloClient } from 'apollo-client'
+
+// import ApolloClient from 'apollo-boost'
+// import VueApollo from 'vue-apollo'
+            
+
 
 Vue.use(Vuex)
 
 var rootApi = process.env.ROOT_API;
+
+
+
+
+import { ApolloClient } from 'apollo-boost'
+import { createHttpLink } from 'apollo-link-http'
+import { InMemoryCache } from 'apollo-cache-inmemory'
+
+const defaultOptions = {
+    watchQuery: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'ignore',
+    },
+    query: {
+      fetchPolicy: 'no-cache',
+      errorPolicy: 'all',
+    },
+  }
+
+
+const httpLink = createHttpLink({  
+  // You should use an absolute URL here
+  uri: `${rootApi}/graphql`
+})
+
+// Cache implementation
+const cache = new InMemoryCache()
+
+// Create the apollo client
+const apolloClient = new ApolloClient({
+ link: httpLink,
+ cache,
+ defaultOptions: defaultOptions
+})
+
+import VueApollo from 'vue-apollo'
+import gql from 'graphql-tag';
+
+//Vue.use(VueApollo)
+
+// const apolloProvider = new VueApollo({
+//   defaultClient: apolloClient,
+// })
+
 
 export default new Vuex.Store({
     state: {
@@ -71,7 +123,56 @@ export default new Vuex.Store({
                 );
             }
         },
-        loadPodcasts(context, details) {
+     async  loadPodcasts(context, details) {
+        context.commit('isLoading', true);
+
+           var response = await apolloClient.query({
+            query: gql `query shows($page:Int,$q:String, $producerId: Int){  showsList(page:$page,q:$q, producerId: $producerId) {first, last, shows{id, title, mp3, publishedDate, producerName, producerId}}}`,
+                variables:{page:details.page, q: details.q,producerId:details.pid}
+            })
+            context.commit('isLoading', false);
+
+            context.commit("setPodcasts", {
+                podcasts: response.data.showsList.shows,
+                last: response.data.showsList.last,
+                first: response.data.showsList.first,
+            });         
+
+        },
+        async loadProducers(context){
+            context.commit('isLoading', true);
+
+            var response = await apolloClient.query({
+                query: gql `query q { producers {id, name, count}}`
+            });
+            context.commit('isLoading', false);
+
+            context.commit("setProducers", response.data.producers); 
+                
+        },
+        async saveProducer(context, producer) {
+            context.commit('isLoading', true);
+
+            var p = {
+                url: producer.website,
+                feedUrl : producer.feedUrl,
+                name: producer.name
+            }
+            var response = await apolloClient.mutate({
+                mutation: gql `mutation create($producer: producerInput!){
+                    createProducer(producer: $producer){ id , name}
+                  }`,
+                  variables:{producer:p}
+            })
+
+            context.dispatch('loadProducers');
+        },
+        login(context,userData){
+            var auth =  btoa(`${userData.username}:${userData.password}`);
+            localStorage.setItem("auth", auth);        
+        },
+
+        loadPodcastsAxios(context, details) {
             var url = `${rootApi}/api/showslist?page=${details.page}`;
             if (details.pid) {
                 url = `${rootApi}/api/producers/${details.pid}/shows?page=${details.page}`;
@@ -93,7 +194,7 @@ export default new Vuex.Store({
                     context.commit('isLoading', false);
                      console.log(err);});
         },
-        loadProducers(context) {
+        loadProducersAxios(context) {
             context.commit('isLoading', true);
             Vue.axios.get(`${rootApi}/api/admin/producers`)
                 .then((resp) => {
@@ -105,16 +206,11 @@ export default new Vuex.Store({
                     context.commit('isLoading', true);
                 });
         },
-        saveProducer(context, producer) {
-            Vue.axios.post(`${rootApi}/api/admin/producers`, producer)
-                .then((resp) => {
-                    context.dispatch('loadProducers');
-                })
-                .catch((err) => console.log(err));
-        },
-        login(context,userData){
-            var auth =  btoa(`${userData.username}:${userData.password}`);
-            localStorage.setItem("auth", auth);        
-        }
+  
     }
 })
+
+
+
+
+
