@@ -92,7 +92,7 @@ export default {
   data: function() {
     return {
       currentPage: 1,
-      search: ""
+      search: "",
     };
   },
 
