@@ -2,9 +2,12 @@
 
 > A Vue.js project for JavaScript podcasts aggregator Front End (Vue.js, Vue-Router )
 
+## Overview
+
+![jsnoise-web](jsnoise-web.png "jsnoise-web")
 
 ## Build Setup
-
+ 
 ``` bash
 # install dependencies
 npm install
