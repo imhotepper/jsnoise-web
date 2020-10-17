@@ -1,6 +1,7 @@
 # jsnoise-web
 
-> A Vue.js project
+> A Vue.js project for JavaScript podcasts aggregator Front End (Vue.js, Vue-Router )
+
 
 ## Build Setup
 
