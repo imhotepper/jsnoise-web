@@ -5,7 +5,7 @@
   "author": "daiot",
   "private": true,
   "engines": {
-    "node": ">=12 <13"
+    "node": ">=4 <=9"
   },
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
