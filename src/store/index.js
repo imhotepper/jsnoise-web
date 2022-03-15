@@ -123,7 +123,7 @@ export default new Vuex.Store({
                 );
             }
         },
-     async  loadPodcasts(context, details) {
+     async  loadPodcastsGraph(context, details) {
         context.commit('isLoading', true);
 
            var response = await apolloClient.query({
@@ -139,7 +139,7 @@ export default new Vuex.Store({
             });         
 
         },
-        async loadProducers(context){
+        async loadProducersGraph(context){
             context.commit('isLoading', true);
 
             var response = await apolloClient.query({
@@ -150,7 +150,7 @@ export default new Vuex.Store({
             context.commit("setProducers", response.data.producers); 
                 
         },
-        async saveProducer(context, producer) {
+        async saveProducerGraph(context, producer) {
             context.commit('isLoading', true);
 
             var p = {
@@ -172,7 +172,7 @@ export default new Vuex.Store({
             localStorage.setItem("auth", auth);        
         },
 
-        loadPodcastsAxios(context, details) {
+        loadPodcasts(context, details) {
             var url = `${rootApi}/api/showslist?page=${details.page}`;
             if (details.pid) {
                 url = `${rootApi}/api/producers/${details.pid}/shows?page=${details.page}`;
@@ -194,9 +194,9 @@ export default new Vuex.Store({
                     context.commit('isLoading', false);
                      console.log(err);});
         },
-        loadProducersAxios(context) {
+        loadProducers(context) {
             context.commit('isLoading', true);
-            Vue.axios.get(`${rootApi}/api/admin/producers`)
+            Vue.axios.get(`${rootApi}/api/adm/producers`)
                 .then((resp) => {
                     context.commit("setProducers", resp.data);
                     context.commit('isLoading', false);
