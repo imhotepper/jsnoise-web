@@ -215,7 +215,7 @@ export default new Vuex.Store({
                 name: producer.name
             }
 
-            Vue.axios.post(`${rootApi}/api/admin/producers`, producer)
+            Vue.axios.post(`${rootApi}/api/adm/producers`, producer)
             .then((resp) => {
                 context.dispatch('loadProducers');
             })
