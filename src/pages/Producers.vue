@@ -52,14 +52,14 @@ export default {
   computed: { ...mapGetters(["producers", "isLoading"]) },
   data: function() {
     return {
-      producer: { name: "", website: "", feedUrl: "" }
+      producer: { name: "", url: "", feedUrl: "" }
     };
   },
   methods: {
     ...mapActions(["loadProducers", "saveProducer"]),
     add: function() {
       this.saveProducer(this.producer);
-      this.producer = { name: "", website: "", feedUrl: "" };
+      this.producer = { name: "", url: "", feedUrl: "" };
     },
     getEmptyPriducer: function() {
       return { name: "", url: "", feedUrl: "" };

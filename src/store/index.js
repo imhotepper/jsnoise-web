@@ -210,7 +210,7 @@ export default new Vuex.Store({
             context.commit('isLoading', true);
 
             var producer = {
-                url: producer.website,
+                url: producer.url,
                 feedUrl : producer.feedUrl,
                 name: producer.name
             }
