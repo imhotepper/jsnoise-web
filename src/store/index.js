@@ -206,7 +206,21 @@ export default new Vuex.Store({
                     context.commit('isLoading', true);
                 });
         },
-  
+        async saveProducer(context, producer) {
+            context.commit('isLoading', true);
+
+            var producer = {
+                url: producer.website,
+                feedUrl : producer.feedUrl,
+                name: producer.name
+            }
+
+            Vue.axios.post(`${rootApi}/api/admin/producers`, producer)
+            .then((resp) => {
+                context.dispatch('loadProducers');
+            })
+            
+        },
     }
 })
 
