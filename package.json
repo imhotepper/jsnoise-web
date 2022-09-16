@@ -22,7 +22,7 @@
     "apollo-link-context": "^1.0.18",
     "apollo-link-http": "^1.5.15",
     "axios": "^0.18.0",
-    "bootstrap": "^4.0.0",
+    "bootstrap": "^4.3.1",
     "crip-vue-loading": "^1.2.5",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
