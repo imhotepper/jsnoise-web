@@ -26,7 +26,7 @@
     "crip-vue-loading": "^1.2.5",
     "graphql": "^14.4.2",
     "graphql-tag": "^2.10.1",
-    "npm": "^6.13.4",
+    "npm": "^9.4.1",
     "uiv": "^0.21.3",
     "vue": "^2.5.2",
     "vue-apollo": "^3.0.0-alpha.3",
